@@ -29,7 +29,7 @@ class byteFile:
 
 	def writeFile(self):
 		#Cycle through the tags and write a new rc.file
-		output = open('out.rc', 'wb')
+		output = open(filename, 'wb')
 		if(self.hexMode):
 			for key,value in self.rcDict.iteritems():
 				output.write(''.join(('@',key,'|',binascii.unhexlify(value),'|\n')))
@@ -43,7 +43,7 @@ class byteFile:
 		for key, value in self.rcDict.iteritems():
 			self.rcDict[key] = binascii.hexlify(value)
 
-# Get the file name
+# Get the file name from the command line arguments
 rcData = byteFile(sys.argv[1])
 rcData.setHexMode();
 
