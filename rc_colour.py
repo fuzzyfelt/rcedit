@@ -24,12 +24,13 @@ class byteFile:
 		return key in self.rcDict
 
 	def printContent(self):
+		print "Tag\thex\t\t\tbinary"
 		for key, value in self.rcDict.iteritems():
-			print key, "\t", value
+			print key, "\t", value, "\t\t", binascii.unhexlify(value)
 
 	def writeFile(self):
 		#Cycle through the tags and write a new rc.file
-		output = open(filename, 'wb')
+		output = open(self.filename, 'wb')
 		if(self.hexMode):
 			for key,value in self.rcDict.iteritems():
 				output.write(''.join(('@',key,'|',binascii.unhexlify(value),'|\n')))
