@@ -1,15 +1,13 @@
-#!/usr/bin/python
-
 import binascii
 import sys
 import string
 import re
+from texttable import Texttable
 
 
 class byteFile:
 
 	def __init__(self, filename):
-
 		self.filename = filename
 		self.hexMode = False
 		data = open(filename, "rb").read()
@@ -24,9 +22,16 @@ class byteFile:
 		return key in self.rcDict
 
 	def printContent(self):
-		print "Tag\thex\t\t\tbinary"
+		table = Texttable()
+		table.set_deco(Texttable.HEADER)
+		table.set_cols_dtype(['t',
+                              't',
+                              'a'])
+		table.add_row(['Tag','hex','binary'])
 		for key, value in self.rcDict.iteritems():
-			print key, "\t", value, "\t\t", binascii.unhexlify(value)
+			table.add_row([key,value,binascii.unhexlify(value)])
+			#print key, "\t", value, "\t\t", binascii.unhexlify(value)
+		print table.draw()
 
 	def writeFile(self):
 		#Cycle through the tags and write a new rc.file
